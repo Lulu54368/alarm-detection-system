@@ -13,7 +13,7 @@ const corsOptionsDelegate = function (req, callback) {
     } else {    
         corsOptions = { origin: false } // disable CORS for this request
     }
-        callback(null, corsOptions) // callback expects two parameters: error and options
+    callback(null, corsOptions) // callback expects two parameters: error and options
 }
 
 module.exports={corsOptionsDelegate}

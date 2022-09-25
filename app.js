@@ -37,13 +37,13 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
+require("dotenv").config();
 const session = require("express-session");
 app.use(
     session({
       // The secret used to sign session cookies (ADD ENV VAR)
       secret: process.env.SESSION_SECRET,
-      name: "diabetesAtHome", // The cookie name (CHANGE THIS)
+      name: "alarm_detection", // The cookie name (CHANGE THIS)
       saveUninitialized: false,
       resave: false,
       proxy: process.env.NODE_ENV == "production",
