@@ -11,7 +11,9 @@ https://blog.logrocket.com/build-rest-api-node-express-mysql/
 
 ### JWT authentication
 https://www.section.io/engineering-education/how-to-build-authentication-api-with-jwt-token-in-nodejs/
-
+https://www.weblearningblog.com/nodejs/simple-login-and-registration-with-expressjs-sequelize-bcrypt-and-jwt/
 
 ### Sequelize
 https://www.turing.com/kb/mysql-connection-with-node-js-using-sequelize-and-express
+https://sequelize.org/docs/v6/getting-started/
+

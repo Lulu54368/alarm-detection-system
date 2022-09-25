@@ -1,59 +1,43 @@
-const express = require("express");
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
-const bodyParser = require("body-parser");
-const cors = require("cors");
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
 
+var app = express();
 
-const app = express();
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
-const corsOptionsDelegate = require("./middleware/cors").corsOptionsDelegate
-//app.use (cors(corsOptions));
-app.use (bodyParser.json());
-app.use (bodyParser.urlencoded({extended:true}));
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-/*//connect to mysql
-var mysql = require('mysql8');
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "password"
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
 });
 
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-});*/
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  
-
-const { Sequelize } = require('sequelize');
-
-const dbConfig = require("./config/database").dbConfig;
-
-const sequelize= new Sequelize(dbConfig.DB, dbConfig.USER,
-dbConfig.PASSWORD, {
-	host: dbConfig.HOST,
-	dialect: dbConfig.dialect,
-	operationsAliases: false,
-	pool: {
-	max: dbConfig.pool.max,
-	min: dbConfig.pool.min,
-	acquire: dbConfig.pool.acquire,
-	idle: dbConfig.pool.idle
-	}
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
 });
-const db = {};
-
-db.Sequelize = Sequelize;
-db.sequelize=sequelize
-
-
-db.sequelize.sync();
-app.get('/home', cors(corsOptionsDelegate), function (req, res, next) {
-    res.json({msg: 'This is CORS-enabled for an allowed domain.'})
-  })
 const server = app.listen(3000, () => {
     console.log("server is running... ");
   });
-module.exports = server;
+module.exports = app;
