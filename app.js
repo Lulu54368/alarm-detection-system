@@ -37,7 +37,23 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-const server = app.listen(3000, () => {
-    console.log("server is running... ");
-  });
+
+const session = require("express-session");
+app.use(
+    session({
+      // The secret used to sign session cookies (ADD ENV VAR)
+      secret: process.env.SESSION_SECRET,
+      name: "diabetesAtHome", // The cookie name (CHANGE THIS)
+      saveUninitialized: false,
+      resave: false,
+      proxy: process.env.NODE_ENV == "production",
+      cookie: {
+        sameSite: "strict",
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge:  3000000,
+      },
+    })
+  );
+
 module.exports = app;
