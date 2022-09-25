@@ -1,6 +1,8 @@
 ## docs
 ### cors
 https://github.com/expressjs/cors
+https://expressjs.com/en/resources/middleware/cors.html
+
 ### developer manual for onenet
 https://open.iot.10086.cn/doc/nb-iot/book/manual/httppush/config.html
 

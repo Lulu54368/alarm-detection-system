@@ -6,14 +6,12 @@ const cors = require("cors");
 
 const app = express();
 
-var corsOptons = {
-	origin: "http://localhost:8080/"
-		};
+const corsOptionsDelegate = require("./middleware/cors").corsOptionsDelegate
 //app.use (cors(corsOptions));
 app.use (bodyParser.json());
 app.use (bodyParser.urlencoded({extended:true}));
 
-//connect to mysql
+/*//connect to mysql
 var mysql = require('mysql8');
 
 var con = mysql.createConnection({
@@ -25,7 +23,9 @@ var con = mysql.createConnection({
 con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
-});
+});*/
+
+  
 
 const { Sequelize } = require('sequelize');
 
@@ -50,7 +50,9 @@ db.sequelize=sequelize
 
 
 db.sequelize.sync();
-
+app.get('/home', cors(corsOptionsDelegate), function (req, res, next) {
+    res.json({msg: 'This is CORS-enabled for an allowed domain.'})
+  })
 const server = app.listen(3000, () => {
     console.log("server is running... ");
   });
