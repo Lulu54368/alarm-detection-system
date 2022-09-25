@@ -7,8 +7,12 @@ const User = sequelize.define('User', {
       allowNull: false
     },
     password: {
-      type: DataTypes.STRING
-      // allowNull defaults to true
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    token:{
+      type: DataTypes.String,
+      allowNull: false
     }
 });
 module.exports={User}
