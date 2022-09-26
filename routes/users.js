@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors')
 const corsOptionsDelegate = require('../middleware/cors').corsOptionsDelegate
 const { verify, findUser } = require('../middleware/auth');
+const crypto = require('crypto')
+const { v4: uuidv4 } = require('uuid');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -18,7 +20,8 @@ router.post('/register', async(req, res, next)=>{
   var usr = {
    
     username : req.body.username,
-    password : await bcrypt.hash(req.body.password, salt)
+    password : await bcrypt.hash(req.body.password, salt),
+    token: crypto.randomBytes(10).toString('hex')
   };
   created_user = await User.create(usr);
   res.status(201).json(created_user);
