@@ -7,7 +7,7 @@ const cors = require('cors')
 const corsOptionsDelegate = require('../middleware/cors').corsOptionsDelegate
 const { verify, findUser } = require('../middleware/auth');
 const crypto = require('crypto')
-const { v4: uuidv4 } = require('uuid');
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -34,7 +34,7 @@ router.post('/login',async(req,res,next)=>{
     const password_valid = await bcrypt.compare(req.body.password,user.password);
     if(password_valid){
         token = jwt.sign({ "id" : user.id,"username": user.username},process.env.SECRET);
-        res.status(200).json({ token : token });
+        res.status(200).json({ 'token' : token });
     } else {
       res.status(400).json({ error : "Password Incorrect" });
     }

@@ -6,7 +6,9 @@ router.post('/data', (req, res)=>{
    
 })
 router.get('/data', (req, res)=>{
-    res.send("success")
-    res.status(200);
+    res.send(req.query.msg)
+    console.log(req.query.msg)
+    res.status(200)
+    .json({'msg': req.query.msg});
 })
 module.exports=router
