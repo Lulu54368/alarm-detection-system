@@ -1,9 +1,9 @@
 const dbConfig = 
 {
-    HOST: "localhost",
-    USER: "root",
-    PASSWORD: "password",
-    DB: "alarm_detection",
+    HOST: process.env.HOST||"localhost",
+    USER: process.env.DBUSER||"root",
+    PASSWORD: process.env.PASSWORD||"password",
+    DB: process.env.DB||"alarm_detection",
     dialect: "mysql", 
 pool: {
     max: 5,
